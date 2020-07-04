@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.EmpDao" >
+    <select id="search"  resultMap="Empmap" >
+       select * from emp  where 1=1
+
+          <if test="ename!=null and  ename !=''">
+           and  ename like "%"#{ename}"%"
+          </if>
+        <if test="deptno!=null and deptno!=''">
+            and deptno=#{deptno}
+        </if>
+
+    </select>
+<resultMap id="Empmap" type="Emp">
+    <result column="deptno" property="deptno"></result>
+    <association property="dept" column="deptno" select="getdeptbyno"></association>
+</resultMap>
+  <select id="getdeptbyno" resultType="Dept">
+       select * from dept where deptno=#{deptno}
+  </select>
+
+    <insert id="addEmp">
+      insert into  emp values(default,#{ename},#{sex},#{head},#{deptno})
+    </insert>
+
+  <delete id="delEmp" >
+       delete from emp where empno=#{empno}
+  </delete>
+
+    <select id="getEmp" resultType="Emp">
+        select * from emp where empno=#{empno}
+    </select>
+
+    <update id="updateEmp" >
+         update  emp set  ename=#{ename} ,sex=#{sex} ,head=#{head},deptno=#{deptno}
+         where empno=#{empno}
+    </update>
+
+</mapper>

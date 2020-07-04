@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.TestDao" >
+    <select id="search"  parameterType="com.pojo.Test"    resultType="com.pojo.Test">
+        select * from test where 1=1
+        <if test="id!=null">
+            and  id=#{id}
+        </if>
+        <if test="name!=null and name !=''">
+          and  name like "%"#{name}"%"
+        </if>
+         <if test="kaishi!=null and  kaishi!=''">
+              and id >=#{kaishi}
+         </if>
+        <if test="jieshu!=null and  jieshu!=''">
+            and id <![CDATA[ <= ]]>#{jieshu}
+        </if>
+
+    </select>
+    <select id="getAll" resultType="com.pojo.Test">
+      select * from test
+ </select>
+    <insert id="add" parameterType="com.pojo.Test">
+        insert into test values(default,#{name})
+    </insert>
+
+</mapper>

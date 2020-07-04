@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.DeptDao" >
+    <select id="search"  resultType="Dept" >
+       select * from dept where 1=1
+          <if test="dname!=null and  dname !=''">
+           and  dname like "%"#{dname}"%"
+          </if>
+        <if test="deptno!=null and  deptno !=''">
+            and  deptno =#{deptno}
+        </if>
+    </select>
+
+    <insert id="addDept"
+            useGeneratedKeys="true"
+            keyColumn="deptno"
+            keyProperty="deptno" >
+        insert into  dept(dname) values(#{dname})
+    </insert>
+    <delete id="delDept" >
+       delete from dept where deptno=#{deptno}
+    </delete>
+
+    <!--通过id 获取对象信息 -->
+    <select id="getOne"  resultType="Dept" >
+        select * from  dept where deptno=#{deptno}
+    </select>
+
+<!--真正更新数据的方法-->
+    <update id="updateDept"  >
+        update dept set dname=#{dname} where deptno=#{deptno}
+    </update>
+
+  <delete id="delbat" >
+       delete from dept where deptno in
+       <foreach collection="array" item="a" open="(" close=")" separator="," >
+            #{a}
+       </foreach>
+
+  </delete>
+
+
+
+
+
+</mapper>
